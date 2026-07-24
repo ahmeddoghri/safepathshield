@@ -1,0 +1,9 @@
+{
+  "name":"safepathshield",
+  "tagline":"A control-barrier safety layer for learned robot policies",
+  "headline":"The policy wants the goal. The shield refuses the collision.",
+  "summary":"Project unsafe velocity commands onto a control-barrier constraint and prove the resulting path stays clear.",
+  "accent":"#7de3ba",
+  "topics":"robotics,control-barrier-functions,safe-rl,motion-planning,robot-safety,simulation",
+  "sources":[["CBF verification","https://proceedings.mlr.press/v270/hu25a.html"]]
+}
