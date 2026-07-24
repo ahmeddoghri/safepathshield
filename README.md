@@ -4,6 +4,8 @@
 
 Wrap a nominal motion policy with a minimally invasive quadratic safety projection, compare both trajectories, and export a checkable path artifact.
 
+![safepathshield cover](demo/cover.png)
+
 ![safepathshield workbench](demo/dashboard.png)
 
 ## What ships
