@@ -13,7 +13,7 @@ Wrap a nominal motion policy with a minimally invasive quadratic safety projecti
 - Nominal goal controller and analytical control-barrier projection
 - Side-by-side unsafe and shielded simulations with collision, clearance, intervention, and goal metrics
 - Deterministic SVG trajectory export
-- CLI, JSON API, animated browser demo, Docker, tests, and CI
+- CLI, JSON API, animated browser demo, Docker, tests
 
 ## Run it end to end
 
