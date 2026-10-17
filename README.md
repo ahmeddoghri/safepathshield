@@ -1,5 +1,7 @@
 # safepathshield
 
+[![tests](https://github.com/ahmeddoghri/safepathshield/actions/workflows/tests.yml/badge.svg)](https://github.com/ahmeddoghri/safepathshield/actions/workflows/tests.yml) [![case study](https://img.shields.io/badge/case%20study-adoghri.com-e0703e)](https://adoghri.com/project-64.html)
+
 **A control-barrier safety layer for learned robot policies.**
 
 Wrap a nominal motion policy with a minimally invasive quadratic safety projection, compare both trajectories, and export a checkable path artifact.
