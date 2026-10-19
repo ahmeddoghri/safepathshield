@@ -2,7 +2,6 @@ name: tests
 
 on:
   push:
-    branches: [main]
   pull_request:
   workflow_dispatch:
 
@@ -12,20 +11,30 @@ permissions:
 jobs:
   test:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
     strategy:
-      fail-fast: false
       matrix:
-        python: ['3.11', '3.13']
+        python-version: ["3.10", "3.11", "3.12", "3.13"]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
-          python-version: ${{ matrix.python }}
-      - name: Install
+          python-version: ${{ matrix.python-version }}
+      - run: python -m pip install -e .
+      - run: python -m unittest discover -s tests -v
+      - run: safepathshield demo
+      - run: python -m safepathshield.eval_v2
+      - name: The shipped filter must not collide anywhere in the sweep
         run: |
-          python -m pip install --upgrade pip
-          pip install -e ".[dev]" || pip install -e .
-          pip install pytest
-      - name: Test
-        run: python -m pytest -q
+          python -m safepathshield.eval_v2 > /tmp/s.json
+          python -c "import json; d=json.load(open('/tmp/s.json')); assert d['tuning']['v2_collision_scenarios']==0 and d['holdout']['v2_collision_scenarios']==0, d"
+
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: docker build -t safepathshield:ci .
+      - name: Smoke-test the workbench
+        run: |
+          docker run -d --name sp -p 8090:8090 safepathshield:ci
+          for i in $(seq 1 20); do curl -sf http://localhost:8090/ >/dev/null && break; sleep 1; done
+          curl -sf http://localhost:8090/ | grep -qi '<html'

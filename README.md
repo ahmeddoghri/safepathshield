@@ -64,6 +64,24 @@ holdout sets. `tests/test_adversarial.py` covers the dt=0.3 collision
 reproduction, the v2 fix on that same scenario, the full tuning/holdout
 sweep, and a demo-output regression check.
 
+### The fix is now what ships
+
+A safety filter whose default is the version that collides is not a safety
+filter. The CLI, the JSON API and the workbench all use the discrete-time
+projection now:
+
+```bash
+safepathshield demo            # discrete-time exact: 0 collisions at any rate in the sweep
+safepathshield demo --legacy   # the continuous-time filter and its published numbers
+```
+
+The published demo still reproduces exactly under `--legacy` (75
+interventions, 0.00137 clearance, 0.05978 goal error), and the default
+reaches the same goal with the same 75 interventions. Tests assert that the
+shipped entry points are bound to the fixed filter, that it collides on none
+of the 60 tuning and holdout scenarios, and that the legacy filter still
+collides on some of them, which is the reason the default changed.
+
 ## Scope
 
 The shipped benchmark is a deterministic single-integrator robot with one circular obstacle. Deployment on physical systems additionally requires full dynamics, uncertainty-aware state estimation, actuator limits, and hardware validation.

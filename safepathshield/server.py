@@ -5,7 +5,8 @@ from http import HTTPStatus
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 
-from .core import DEMO, analyze
+from .core_v2 import analyze_v2 as analyze
+from .core import DEMO
 
 
 def make_handler(web_root: Path):
